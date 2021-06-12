@@ -27,4 +27,12 @@ RSpec.describe 'Merchant discounts index page' do
 
     expect(current_path).to eq("/merchants/#{@merchant.id}/discounts/#{@dis_1.id}")
   end
+
+  it 'has a button to create a new item' do
+    visit "/merchants/#{@merchant.id}/discounts"
+
+    click_button 'New Discount'
+
+    expect(current_path).to eq("/merchants/#{@merchant.id}/discounts/new")
+  end
 end
