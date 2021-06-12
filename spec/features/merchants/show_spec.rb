@@ -116,5 +116,13 @@ RSpec.describe 'Merchants dashboard show page' do
       expect(page).to have_content('Blers Moushca')
       expect(page).to have_content('Sjarn Max')
     end
+
+    it 'links to merchant discounts index' do
+      visit "/merchants/#{@merchant.id}/dashboard"
+
+      click_on 'All Discounts'
+
+      expect(current_path).to eq("/merchants/#{@merchant.id}/discounts")
+    end
   end
 end
