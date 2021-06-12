@@ -36,7 +36,7 @@ RSpec.describe 'Merchant discounts index page' do
     expect(current_path).to eq("/merchants/#{@merchant.id}/discounts/new")
   end
 
-  it 'has buttons to delete each plot' do
+  it 'has buttons to delete each discount' do
     visit "/merchants/#{@merchant.id}/discounts"
 
     within "tr#div-#{@dis_1.id}" do
