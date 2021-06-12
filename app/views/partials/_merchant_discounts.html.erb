@@ -1,0 +1,13 @@
+<h4><%= @merchant.name %> Discounts</h4><br>
+<table class="center" style="text-align: center;" id= "#top_5" style='width: 100%; border-color: black;'>
+  <tr>
+    <th>Discount Percentage</th>
+    <th>Quantity Threshold</th>
+  </tr>
+  <% @discounts.each do |discount| %>
+        <tr class="discount">
+          <td><%= link_to discount.percentage_discount , "/merchants/#{@merchant.id}/discounts/#{discount.id}" %>% Discount</td>
+          <td><%= discount.quantity_threshold %> items purchased in bulk</td>
+        </tr>
+    <% end %>
+</table><br>
