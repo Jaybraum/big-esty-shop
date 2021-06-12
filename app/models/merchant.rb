@@ -6,6 +6,7 @@ class Merchant < ApplicationRecord
   has_many :invoices, through: :invoice_items
   has_many :transactions, through: :invoices
   has_many :customers, through: :invoices
+  has_many :discounts, dependent: :destroy
 
   def self.top_five
     select('merchants.name, merchants.id as id, sum(invoice_items.quantity * invoice_items.unit_price) as total_revenue')
