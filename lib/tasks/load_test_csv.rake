@@ -8,6 +8,7 @@ task :load_test_csv do
   Rake::Task["load_test_items"].invoke
   Rake::Task["load_test_invoice_items"].invoke
   Rake::Task["load_test_transactions"].invoke
+  Rake::Task["load_test_discounts"].invoke
 end
 
 task initialize: :environment do
@@ -22,6 +23,7 @@ task initialize: :environment do
   require './app/models/item.rb'
   require './app/models/invoice_item.rb'
   require './app/models/transaction.rb'
+  require './app/models/discount.rb'
 end
 
 desc "load customers"
@@ -126,4 +128,19 @@ task load_test_invoices: :environment do
     end
   end
   puts "Invoice CSV Database Upload Complete\n"
+end
+
+task load_discounts: :environment do
+  CSV.foreach('./db/data/discounts.csv', :headers => true,  header_converters: :symbol, converters: :all, :encoding => 'UTF-8') do |row|
+    t = Discount.new
+    t.id = row[:id]
+    t.percentage_discount = row[:percentage_discount].to_i
+    t.item_quantity = row[:item_quantity].to_i
+    t.merchant_id = row[:merchant_id]
+    t.save
+    if t.save == false
+      print "Failed to add Discount ##{row[:id]} to database\r"
+    end
+  end
+  puts "Discount CSV Database Upload Complete\n"
 end
