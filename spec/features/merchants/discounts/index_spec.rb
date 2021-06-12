@@ -13,11 +13,11 @@ RSpec.describe 'Merchant discounts index page' do
   it 'displays all the bulk discounts and their attributes' do
     visit "/merchants/#{@merchant.id}/discounts"
 
-    expect(page.all(".discount")[0].text).to eq("5% Discount 15 items purchased in bulk")
-    expect(page.all(".discount")[1].text).to eq("10% Discount 25 items purchased in bulk")
-    expect(page.all(".discount")[2].text).to eq("15% Discount 35 items purchased in bulk")
-    expect(page.all(".discount")[3].text).to eq("20% Discount 45 items purchased in bulk")
-    expect(page.all(".discount")[4].text).to eq("25% Discount 55 items purchased in bulk")
+    expect(page.all(".discount")[0].text).to eq("5% Discount 15 items")
+    expect(page.all(".discount")[1].text).to eq("10% Discount 25 items")
+    expect(page.all(".discount")[2].text).to eq("15% Discount 35 items")
+    expect(page.all(".discount")[3].text).to eq("20% Discount 45 items")
+    expect(page.all(".discount")[4].text).to eq("25% Discount 55 items")
   end
 
   it 'links to discounts show page' do
