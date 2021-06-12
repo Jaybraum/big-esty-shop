@@ -1,0 +1,4 @@
+<h3> <%= @discount.percentage_discount %>% Bulk Discount!</h3>
+<p> This discount offers <%= @discount.percentage_discount %>% off on items bought in bulk of <%= @discount.quantity_threshold %> or more. </p>
+
+<%= link_to 'Update Discount', "/merchants/#{@merchant.id}/discounts/#{@discount.id}/edit", method: :get %><br/>

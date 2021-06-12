@@ -5,9 +5,10 @@
     <th>Quantity Threshold</th>
   </tr>
   <% @discounts.each do |discount| %>
-        <tr class="discount">
+        <tr class="discount" id="div-<%= discount.id %>">
           <td><%= link_to discount.percentage_discount , "/merchants/#{@merchant.id}/discounts/#{discount.id}" %>% Discount</td>
-          <td><%= discount.quantity_threshold %> items purchased in bulk</td>
+          <td><%= discount.quantity_threshold %> items  </td>
+          <td><%= button_to "Delete", "/merchants/#{@merchant.id}/discounts/#{discount.id}", method: :delete%></td>
         </tr>
     <% end %>
 </table><br>
