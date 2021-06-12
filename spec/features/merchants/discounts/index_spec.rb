@@ -19,4 +19,12 @@ RSpec.describe 'Merchant discounts index page' do
     expect(page.all(".discount")[3].text).to eq("20% Discount 45 items purchased in bulk")
     expect(page.all(".discount")[4].text).to eq("25% Discount 55 items purchased in bulk")
   end
+
+  it 'links to discounts show page' do
+    visit "/merchants/#{@merchant.id}/discounts"
+
+    click_on "#{@dis_1.percentage_discount}"
+
+    expect(current_path).to eq("/merchants/#{@merchant.id}/discounts/#{@dis_1.id}")
+  end
 end
