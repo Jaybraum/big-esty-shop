@@ -18,4 +18,11 @@ RSpec.describe Holiday do
     public_holiday = Holiday.new
     expect(public_holiday).to be_an_instance_of(Holiday)
   end
+
+  it 'upcoming_holidays' do
+    public_holiday = Holiday.new
+
+    expect(public_holiday.upcoming_holidays).to be_an(Array)
+
+  end
 end
