@@ -46,4 +46,11 @@ RSpec.describe 'Merchant discounts index page' do
     expect(current_path).to eq("/merchants/#{@merchant.id}/discounts")
     expect(page).to_not have_content("5% Discount 15 items purchased in bulk")
   end
+
+  it 'Lists the next three public holidays USA' do
+    visit "/merchants/#{@merchant.id}/discounts"
+
+    expect(page).to have_content("Upcoming Holidays")
+    #dynamic test fir list
+  end
 end

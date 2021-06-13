@@ -3,3 +3,10 @@
   <%= button_to 'New Discount', "/merchants/#{@merchant.id}/discounts/new", method: :get %><br>
   <%= render partial: 'partials/merchant_discounts' %>
 </div>
+
+<div class="holidays">
+  <h3>Upcoming Holidays</h3>
+  <% @public_holiday.upcoming_holidays.each do |info| %>
+    <p><%= info[:name] %> will be on <%= info[:date] %></p>
+  <% end %>
+</div>
