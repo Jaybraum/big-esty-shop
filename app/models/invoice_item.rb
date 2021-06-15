@@ -3,7 +3,6 @@
 class InvoiceItem < ApplicationRecord
   belongs_to :invoice
   belongs_to :item
-  has_many: 
   # enum status: { pending: 0, packaged: 1, shipped: 2 }
   enum status: [:pending, :packaged, :shipped]
 

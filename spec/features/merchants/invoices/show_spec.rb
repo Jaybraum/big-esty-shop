@@ -62,7 +62,7 @@ RSpec.describe 'Merchant invoice show page' do
       expect(page).to have_content("Expected Total Revenue: $136.00")
     end
 
-    it 'lists total discounted revenue of all items on invoice' do
+    xit 'lists total discounted revenue of all items on invoice' do
       visit "/merchants/#{@merchant.id}/invoices/#{@invoice.id}"
       save_and_open_page
 
