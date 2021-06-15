@@ -6,6 +6,7 @@ class Item < ApplicationRecord
   has_many :transactions, through: :invoices
   has_many :customers, through: :invoices
   belongs_to :merchant
+  has_many :discounts, through: :merchant
   enum enabled: [:enabled, :disabled]
 
   def self.not_yet_shipped
