@@ -16,7 +16,8 @@
   </table><br><br>
   <div>
     <h1> All Invoice Items</h1><br>
-    <h3>Expected Total Revenue: <%= number_to_currency(@invoice_items.total_revenue.to_f/100) %></h3> <br>
+    <h3>Expected Total Revenue: <%= number_to_currency(@invoice_items.total_revenue.to_f/100) %>
+      /// Expected Discounted Revenue: <%= number_to_currency(@invoice_items.total_discounted_revenue.to_f/100)</h3> <br>
     <table class="invoice-items"style='width: 80%; border-color: white;'>
       <tr>
         <th>Item</th>
