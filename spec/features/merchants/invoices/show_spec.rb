@@ -4,19 +4,24 @@ require 'rails_helper'
 
 RSpec.describe 'Merchant invoice show page' do
   before :each do
-    # @item = Item.find(id)
-    # @merchant = Merchant.find(id)
     @merchant = Merchant.create!(name: 'Sally Handmade')
-    @merchant_2 = Merchant.create!(name: 'Billy Mandmade')
-    @item =  @merchant.items.create!(name: 'Qui Essie', description: 'Lorem ipsim', unit_price: 1200)
-    @item_2 =  @merchant.items.create!(name: 'Essie', description: 'Lorem ipsim', unit_price: 1000)
-    @item_3 = @merchant_2.items.create!(name: 'Glowfish Markdown', description: 'Lorem ipsim', unit_price: 200)
+
+    @disco_1 = @merchant.discounts.create!(percentage_discount: 30, quantity_threshold: 10)
+    @disco_2 = @merchant.discounts.create!(percentage_discount: 20, quantity_threshold: 9)
+    @disco_3 = @merchant.discounts.create!(percentage_discount: 10, quantity_threshold: 8)
+
+    @item_1 = @merchant.items.create!(name: 'Qui Essie', description: 'Lorem ipsim', unit_price: 10)
+    @item_2 =  @merchant.items.create!(name: 'Essie', description: 'Lorem ipsim', unit_price: 10)
+    @item_3 = @merchant.items.create!(name: 'Glowfish Markdown', description: 'Lorem ipsim', unit_price: 10)
+
     @customer = Customer.create!(first_name: 'Joey', last_name: 'Ondricka')
+
     @invoice = Invoice.create!(customer_id: @customer.id, status: 'completed')
     @invoice_2 = Invoice.create!(customer_id: @customer.id, status: 'completed')
-    InvoiceItem.create!(item_id: @item.id, invoice_id: @invoice.id, quantity: 3, unit_price: 1200, status: 1)
-    InvoiceItem.create!(item_id: @item_2.id, invoice_id: @invoice.id, quantity: 10, unit_price: 1000, status: 1)
-    InvoiceItem.create!(item_id: @item_3.id, invoice_id: @invoice_2.id, quantity: 12, unit_price: 200, status: 1)
+
+    @invi_1 = InvoiceItem.create!(item_id: @item_1.id, invoice_id: @invoice.id, quantity: 10, unit_price: 100, status: 1)
+    @invi_2 = InvoiceItem.create!(item_id: @item_2.id, invoice_id: @invoice.id, quantity: 9, unit_price: 100, status: 1)
+    @invi_3 = InvoiceItem.create!(item_id: @item_3.id, invoice_id: @invoice.id, quantity: 8, unit_price: 100, status: 2)
   end
 
   describe 'display' do
@@ -35,9 +40,9 @@ RSpec.describe 'Merchant invoice show page' do
 
       expect(page).to have_content("Qui Essie")
       expect(page).to have_content("Essie")
-      expect(page).to_not have_content("Glowfish Markdown")
-      expect(page).to have_content("3")
-      expect(page).to have_content("$1,200.00")
+      expect(page).to have_content("Essie")
+      expect(page).to have_content("Glowfish Markdown")
+      expect(page).to have_content("$100.00")
     end
 
     it 'can update items status through dropdown list' do
@@ -59,14 +64,15 @@ RSpec.describe 'Merchant invoice show page' do
     it 'lists total revenue of all items on invoice' do
       visit "/merchants/#{@merchant.id}/invoices/#{@invoice.id}"
 
-      expect(page).to have_content("Expected Total Revenue: $136.00")
+      expect(page).to have_content("Expected Total Revenue: $2,700.00")
     end
 
-    xit 'lists total discounted revenue of all items on invoice' do
+    it 'lists total discounted revenue of all items on invoice' do
+
       visit "/merchants/#{@merchant.id}/invoices/#{@invoice.id}"
       save_and_open_page
 
-      expect(page).to have_content("Expected Total Discounted Revenue: $136.00")
+      expect(page).to have_content("Expected Revenue With Discount Applied: $2,140.00")
     end
   end
 end
