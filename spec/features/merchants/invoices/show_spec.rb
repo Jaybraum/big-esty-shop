@@ -73,8 +73,13 @@ RSpec.describe 'Merchant invoice show page' do
       expect(page).to have_content("Expected Revenue With Discount Applied: $21.40")
     end
 
-    it 'links to discount show page' do
+    it 'links to discount show page only with discount' do
+      @invi_3 = InvoiceItem.create!(item_id: @item_3.id, invoice_id: @invoice.id, quantity: 5, unit_price: 100, status: 2)
       visit "/merchants/#{@merchant.id}/invoices/#{@invoice.id}"
+
+      within "#invi-#{@invi_3.id}" do
+        expect(page).not_to have_link
+      end
 
       within "#invi-#{@invi_1.id}" do
         click_on("30% Discount")
