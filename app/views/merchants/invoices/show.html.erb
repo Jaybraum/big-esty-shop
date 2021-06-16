@@ -16,17 +16,18 @@
   </table><br><br>
   <div>
     <h1> All Invoice Items</h1><br>
-    <h3>Expected Total Revenue: <%= number_to_currency(@invoice_items.total_revenue) %>
-    /// Expected Revenue With Discount Applied: <%= number_to_currency(@invoice.discounted_revenue) %></h3> <br>
+    <h3>Expected Total Revenue: <%= number_to_currency(@invoice_items.total_revenue / 100.0) %>
+    /// Expected Revenue With Discount Applied: <%= number_to_currency(@invoice.discounted_revenue / 100.0) %></h3> <br>
     <table class="invoice-items"style='width: 80%; border-color: white;'>
       <tr>
         <th>Item</th>
         <th>Quantity</th>
         <th>Unit Price</th>
         <th>Status</th>
+        <th>Discount</th>
       </tr>
         <% @invoice_items.each do |ii| %>
-          <tr>
+          <tr id="invi-<%= ii.id %>">
             <td><%= ii.item.name %></td>
             <td><%= ii.quantity %></td>
             <td><%= number_to_currency(ii.unit_price) %></td>
@@ -34,7 +35,9 @@
                 <%= form.hidden_field :ii_id, :value => ii.id %>
                 <%= form.select :status, options_for_select([:pending, :packaged, :shipped ], ii.status) %>
                 <%= form.submit %>
-            </td>
+            <td><% if !ii.eligible_discount.nil? %>
+                <%= link_to "#{ii.eligible_discount.percentage_discount}% Discount", merchant_discount_path(@merchant, ii.eligible_discount) %>
+              <% end %>
         <% end %>
           </tr>
         <% end %>

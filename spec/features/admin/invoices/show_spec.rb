@@ -41,12 +41,21 @@ RSpec.describe 'invoices show page', type: :feature do
     end
   end
 
+  it 'lists total discounted revenue from this invoice' do
+    visit "/admin/invoices/#{@invoice.id}"
+    exp_revenue = "$#{@invoice.discounted_revenue / 100.0}"
+    within "section#revenue" do
+      expect(page).to have_content exp_revenue
+    end
+  end
+
+
   describe 'page functionality' do
     it 'can update invoice status' do
       visit "/admin/invoices/#{@invoice.id}"
       expected_status = @invoice.status.capitalize
       expect(page).to have_select('invoice_status', selected: expected_status)
-      select 'Completed', from: 'invoice_status' 
+      select 'Completed', from: 'invoice_status'
       click_button 'Update Invoice'
       expect(current_path).to eq "/admin/invoices/#{@invoice.id}"
       expect(@invoice.reload.status).to eq 'completed'

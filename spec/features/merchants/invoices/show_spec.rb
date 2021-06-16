@@ -64,14 +64,23 @@ RSpec.describe 'Merchant invoice show page' do
     it 'lists total revenue of all items on invoice' do
       visit "/merchants/#{@merchant.id}/invoices/#{@invoice.id}"
 
-      expect(page).to have_content("Expected Total Revenue: $2,700.00")
+      expect(page).to have_content("Expected Total Revenue: $27.00")
     end
 
     it 'lists total discounted revenue of all items on invoice' do
-
       visit "/merchants/#{@merchant.id}/invoices/#{@invoice.id}"
 
-      expect(page).to have_content("Expected Revenue With Discount Applied: $2,140.00")
+      expect(page).to have_content("Expected Revenue With Discount Applied: $21.40")
+    end
+
+    it 'links to discount show page' do
+      visit "/merchants/#{@merchant.id}/invoices/#{@invoice.id}"
+
+      within "#invi-#{@invi_1.id}" do
+        click_on("30% Discount")
+      end
+
+      expect(current_path).to eq(merchant_discount_path(@merchant, @disco_1))
     end
   end
 end
