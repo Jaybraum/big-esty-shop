@@ -13,12 +13,8 @@ class InvoiceItem < ApplicationRecord
   end
 
   def eligible_discount
-    discounts.where('? <= discounts.quantity_threshold', self.quantity)
-    .order(discounts: :desc)
+    discounts.where('discounts.quantity_threshold <= ?', quantity)
+    .order(percentage_discount: :desc)
     .first
-  end
-
-  def discounted_revenue
-    self.total_revenue - (self.total_revenue * discount_items)
   end
 end
