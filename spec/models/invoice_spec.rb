@@ -7,7 +7,7 @@ RSpec.describe Invoice do
     @item =  @merchant.items.create!(name: 'Qui Essie', description: 'Lorem ipsim', unit_price: 75107)
     @item_2 =  @merchant.items.create!(name: 'Essie', description: 'Lorem ipsim', unit_price: 75107)
     @item_3 = @merchant_2.items.create!(name: 'Glowfish Markdown', description: 'Lorem ipsim', unit_price: 55542)
-    @customer = Customer.create!(first_name: 'Joey', last_name: 'Ondricka') 
+    @customer = Customer.create!(first_name: 'Joey', last_name: 'Ondricka')
     @invoice = Invoice.create!(customer_id: @customer.id, status: 'completed')
     @invoice_2 = Invoice.create!(customer_id: @customer.id, status: 'completed')
     InvoiceItem.create!(item_id: @item.id, invoice_id: @invoice.id, quantity: 539, unit_price: 13635, status: 1)
@@ -42,6 +42,31 @@ RSpec.describe Invoice do
       single_invoice = Invoice.last
       total_revenue = single_invoice.invoice_items.total_revenue # utilizes class method from InvoiceItems
       expect(single_invoice.revenue).to eq total_revenue
+    end
+
+    it '#total discounted revenue' do
+      @merchant = Merchant.create!(name: 'Sally Handmade')
+
+      @disco_1 = @merchant.discounts.create!(percentage_discount: 30, quantity_threshold: 10)
+      @disco_2 = @merchant.discounts.create!(percentage_discount: 20, quantity_threshold: 9)
+      @disco_3 = @merchant.discounts.create!(percentage_discount: 10, quantity_threshold: 8)
+
+      @item_1 = @merchant.items.create!(name: 'Qui Essie', description: 'Lorem ipsim', unit_price: 10)
+      @item_2 =  @merchant.items.create!(name: 'Essie', description: 'Lorem ipsim', unit_price: 10)
+      @item_3 = @merchant.items.create!(name: 'Glowfish Markdown', description: 'Lorem ipsim', unit_price: 10)
+
+      @customer = Customer.create!(first_name: 'Joey', last_name: 'Ondricka')
+
+      @invoice = Invoice.create!(customer_id: @customer.id, status: 'completed')
+
+      @invi_1 = InvoiceItem.create!(item_id: @item_1.id, invoice_id: @invoice.id, quantity: 10, unit_price: 100, status: 1)
+      @invi_2 = InvoiceItem.create!(item_id: @item_2.id, invoice_id: @invoice.id, quantity: 9, unit_price: 100, status: 1)
+      @invi_3 = InvoiceItem.create!(item_id: @item_3.id, invoice_id: @invoice.id, quantity: 8, unit_price: 100, status: 2)
+
+
+      expect(@invoice.revenue).to eq(2700)
+      expect(@invoice.total_of_discount).to eq(560)
+      expect(@invoice.discounted_revenue).to eq(2140)
     end
   end
 end
