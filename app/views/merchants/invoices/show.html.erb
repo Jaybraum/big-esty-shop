@@ -27,7 +27,7 @@
         <th>Discount</th>
       </tr>
         <% @invoice_items.each do |ii| %>
-          <tr>
+          <tr id="invi-<%= ii.id %>">
             <td><%= ii.item.name %></td>
             <td><%= ii.quantity %></td>
             <td><%= number_to_currency(ii.unit_price) %></td>

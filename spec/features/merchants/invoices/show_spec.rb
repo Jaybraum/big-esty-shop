@@ -74,12 +74,13 @@ RSpec.describe 'Merchant invoice show page' do
     end
 
     it 'links to discount show page' do
+      visit "/merchants/#{@merchant.id}/invoices/#{@invoice.id}"
 
-      within '.invoice_items' do
-        click_on(@discount.percentage_discount)
+      within "#invi-#{@invi_1.id}" do
+        click_on(@disco_1.percentage_discount)
       end
 
-      expect(current_path).to eq(merchant_bulk_discount_path(@merchant, @discount))
+      expect(current_path).to eq(merchant_discount_path(@merchant, @disco_1))
     end
   end
 end
