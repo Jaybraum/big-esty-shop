@@ -1,7 +1,8 @@
 <h2>Invoice #<%= @invoice.id %></h2>
 
 <section id="revenue">
-  <strong>This invoice is expected to generate $<%= @invoice.revenue / 100.0 %></strong>
+  <strong>This invoice is expected to generate $<%= @invoice.revenue / 100.0 %>
+  /// Expected with Applied discount: $<%= @invoice.discounted_revenue / 100.0 %></strong>
 </section>
 <table>
   <tr>

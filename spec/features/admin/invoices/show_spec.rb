@@ -48,7 +48,7 @@ RSpec.describe 'invoices show page', type: :feature do
       expect(page).to have_content exp_revenue
     end
   end
-end
+
 
   describe 'page functionality' do
     it 'can update invoice status' do
